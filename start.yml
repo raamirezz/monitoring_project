@@ -1,0 +1,7 @@
+- name: Iniciar stack de monitoring
+  hosts: monitoring
+  become: yes
+  tasks:
+    - include_role:
+        name: monitoring
+        tasks_from: start

@@ -1,0 +1,14 @@
+- name: Detener contenedores con Docker Compose
+  shell: docker compose --project-name monitoring stop
+  args:
+    chdir: /home/carlos/monitoring_project/roles/monitoring/files
+
+- name: Mostrar contenedores tras stop (esperamos que estén detenidos)
+  shell: |
+    docker ps -a --format 'table {{"{{"}}.Names{{"}}"}}\t{{"{{"}}.Image{{"}}"}}\t{{"{{"}}.Status{{"}}"}}'
+  register: containers_after_stop
+  failed_when: false
+
+- name: Resultado tras stop
+  debug:
+    msg: "{{ containers_after_stop.stdout_lines }}"

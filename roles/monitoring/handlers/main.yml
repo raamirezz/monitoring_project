@@ -1,0 +1,4 @@
+- name: Reiniciar Prometheus
+  shell: docker compose restart prometheus
+  args:
+    chdir: /opt/monitoring

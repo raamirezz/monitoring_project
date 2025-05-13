@@ -1,0 +1,30 @@
+version: "3.8"
+
+services:
+  prometheus:
+    image: prom/prometheus:v2.52.0
+    volumes:
+      - /home/carlos/monitoring_project/roles/monitoring/files/prometheus.yml:/etc/prometheus/prometheus.yml
+      - prom_data:/prometheus
+    ports:
+      - "9090:9090"
+
+  grafana:
+    image: grafana/grafana-oss:11.0.0
+    container_name: grafana
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+    ports:
+      - "3000:3000"
+    volumes:
+      - grafana_data:/var/lib/grafana
+
+  node-exporter:
+    image: prom/node-exporter:v1.8.1
+    container_name: node_exporter
+    ports:
+      - "9100:9100"
+
+volumes:
+  prom_data:
+  grafana_data:

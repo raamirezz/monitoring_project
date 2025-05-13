@@ -1,0 +1,13 @@
+- name: Levantar contenedores con Docker Compose
+  shell: docker compose --project-name monitoring up -d
+  args:
+    chdir: /home/carlos/monitoring_project/roles/monitoring/files
+
+- name: Mostrar contenedores en ejecución
+  shell: docker ps --format 'table {{ "{{" }}.Names{{ "}}" }}\t{{ "{{" }}.Image{{ "}}" }}\t{{ "{{" }}.Status{{ "}}" }}\t{{ "{{" }}.Ports{{ "}}" }}'
+  register: containers_after_start
+  failed_when: false
+
+- name: Resultado del stack tras start
+  debug:
+    msg: "{{ containers_after_start.stdout_lines }}"

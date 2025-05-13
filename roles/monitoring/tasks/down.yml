@@ -1,0 +1,13 @@
+- name: Eliminar contenedores y volúmenes del stack
+  shell: docker compose --project-name monitoring down --volumes --remove-orphans
+  args:
+    chdir: /home/carlos/monitoring_project/roles/monitoring/files
+
+- name: Verificar que no hay contenedores activos tras down
+  shell: docker ps -a --format 'table {{ "{{" }}.Names{{ "}}" }}\t{{ "{{" }}.Image{{ "}}" }}\t{{ "{{" }}.Status{{ "}}" }}'
+  register: containers_after_down
+  failed_when: false
+
+- name: Mostrar resultado tras down
+  debug:
+    msg: "{{ containers_after_down.stdout_lines }}"

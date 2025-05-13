@@ -1,0 +1,43 @@
+- name: Instala dependencias
+  apt:
+    name:
+      - apt-transport-https
+      - ca-certificates
+      - curl
+      - software-properties-common
+    update_cache: yes
+    state: present
+
+- name: Añadir GPG key oficial de Docker
+  apt_key:
+    url: https://download.docker.com/linux/ubuntu/gpg
+    state: present
+
+- name: Añadir repositorio Docker
+  apt_repository:
+    repo: deb [arch=amd64] https://download.docker.com/linux/ubuntu focal stable
+    state: present
+
+- name: Instalar Docker Engine y CLI
+  apt:
+    name:
+      - docker-ce
+      - docker-ce-cli
+      - containerd.io
+    state: present
+    update_cache: yes
+
+- name: Crear directorio para Docker Compose CLI plugin
+  file:
+    path: /usr/local/lib/docker/cli-plugins
+    state: directory
+    mode: '0755'
+    owner: root
+    group: root
+
+- name: Instalar Docker Compose plugin
+  get_url:
+    url: https://github.com/docker/compose/releases/download/v2.27.0/docker-compose-linux-x86_64
+    dest: /usr/local/lib/docker/cli-plugins/docker-compose
+    mode: '0755'
+    timeout: 60
