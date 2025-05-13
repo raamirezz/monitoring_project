@@ -1,5 +1,5 @@
-- name: Levantar contenedores con Docker Compose
-  shell: docker compose --project-name monitoring up -d
+- name: Levantar contenedores
+  shell: docker compose --project-name monitoring up -d --build
   args:
     chdir: /home/carlos/monitoring_project/roles/monitoring/files
 
