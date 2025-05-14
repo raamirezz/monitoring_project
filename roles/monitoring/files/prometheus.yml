@@ -5,3 +5,6 @@ scrape_configs:
   - job_name: 'sample-app'
     static_configs:
       - targets: ['sample_app:8080']
+  - job_name: 'my_flask_app'
+    static_configs:
+      - targets: ['my_flask_app:5000']
